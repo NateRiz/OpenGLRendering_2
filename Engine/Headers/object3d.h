@@ -11,6 +11,7 @@ public:
     Object3D(){}
     Object3D(World*);
     Object3D(World*, Transform*);
+    virtual ~Object3D();
 
     Transform* GetTransform() const;
     void SetTransform(Transform*);
@@ -21,6 +22,7 @@ public:
 
     virtual void ProcessInput(float delta);
     virtual void ProcessMouseMovement(float delta, double x, double y);
+
 
 
 private:

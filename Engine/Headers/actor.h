@@ -11,6 +11,7 @@ public:
     Actor(){}
     Actor(World* world);
     World* GetWorld();
+    virtual ~Actor();
     virtual void Tick(float delta){}
     Actor* GetRoot();
     Actor* GetParent();

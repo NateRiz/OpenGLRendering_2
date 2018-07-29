@@ -1,9 +1,6 @@
-//
-// Created by nathan on 7/29/18.
-//
-
 #ifndef VOXEL3_CLION_FIELDMANAGER_H
 #define VOXEL3_CLION_FIELDMANAGER_H
+
 #include "../../Engine/Headers/actor.h"
 #include "../../Engine/Headers/object3d.h"
 #include <utility>

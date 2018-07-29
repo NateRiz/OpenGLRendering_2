@@ -94,8 +94,15 @@ World &World::GetInstance() {
     return world;
 }
 
+
 World::~World()
 {
+    for(auto actor: mActors)
+    {
+        delete actor;
+    }
+
     delete mRenderer;
 }
+
 

@@ -6,6 +6,8 @@ Actor::Actor(World* world) :
 {
     mWorld->AddActor(this);
 }
+Actor::~Actor(){}
+
 
 World* Actor::GetWorld()
 {
@@ -40,3 +42,4 @@ Actor* Actor::GetRoot()
     else
         return this;
 }
+

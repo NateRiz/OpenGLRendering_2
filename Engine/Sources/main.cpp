@@ -21,11 +21,11 @@ int main()
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
-    Camera cam = Camera(&world, new Transform());
-    (&world)->AddInputListener(&cam);
-    (&world)->SetActiveCamera(&cam);
+    auto cam = new Camera(&world, new Transform());
+    (&world)->AddInputListener(cam);
+    (&world)->SetActiveCamera(cam);
 
-    FieldManager fm(&world);
+    auto fm = new FieldManager(&world);
 
 
     while (!glfwWindowShouldClose(window.GetWindow()))
@@ -49,9 +49,6 @@ int main()
             e = 0;
             e = glGetError();
         }
-
-
-
     }
     return 0;
 }

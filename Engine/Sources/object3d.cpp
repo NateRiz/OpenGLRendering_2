@@ -8,6 +8,10 @@ Object3D::Object3D(World* world, Transform* transform) :
 {
 }
 
+Object3D::~Object3D() {
+    delete mTransform;
+}
+
 Object3D::Object3D(World* world) :
         Actor(world),
         mTransform(new Transform())
