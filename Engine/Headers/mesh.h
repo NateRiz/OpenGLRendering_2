@@ -10,6 +10,8 @@ public:
     Mesh();
     Mesh(World*);
     Mesh(World*, std::vector<float>&, Shader);
+    void SetVertices(std::vector<float>&);
+
     void Draw();
 
 private:

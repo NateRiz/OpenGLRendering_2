@@ -28,8 +28,10 @@ Mesh::Mesh( World* world, std::vector<float>& v, Shader s):
     glGenBuffers(1, &VBO);
 }
 
-
-
+void Mesh::SetVertices(std::vector<float> & v)
+{
+    mVertices = v;
+}
 
 void Mesh::Draw()
 {
@@ -50,3 +52,5 @@ void Mesh::Draw()
     glEnableVertexAttribArray(0);
     glDrawArrays(GL_TRIANGLES, 0, (GLsizei)mVertices.size());
 }
+
+
