@@ -12,6 +12,7 @@ int main()
 {
     Window window;
     World& world = World::GetInstance();
+    World::GetInstance().SetWindow(window.GetWindow());
     glfwSetCursorPosCallback(window.GetWindow(),World::MouseCallbackWrapper);
 
 
@@ -64,10 +65,12 @@ int main()
             -0.5f,  0.5f,  0.5f,
             -0.5f,  0.5f, -0.5f,
     };
-    obj.SetMesh(new Mesh(&world, v));
+    obj.SetMesh(new Mesh(&world, v,Shader("DefaultVertex.glsl","DefaultFragment.glsl")));
 
-    //Camera cam = Camera(&world, new Transform());
-    //(&world)->AddInputListener(cam);
+    Camera cam = Camera(&world, new Transform());
+    (&world)->AddInputListener(&cam);
+    (&world)->SetActiveCamera(&cam);
+
 
     while (!glfwWindowShouldClose(window.GetWindow()))
     {
@@ -86,8 +89,8 @@ int main()
         auto e = glGetError();
         while (e!=0)
         {
-            e = 0;
             std::cout<<"ERROR: " << e << std::endl;
+            e = 0;
             e = glGetError();
         }
 

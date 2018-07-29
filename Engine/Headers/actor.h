@@ -1,5 +1,6 @@
 #ifndef ACTOR_H
 #define ACTOR_H
+
 class World;
 #include <vector>
 

@@ -29,7 +29,14 @@ void World::Update()
     //Drawing
     mRenderer->DrawAll();
 }
-
+void World::SetWindow(GLFWwindow* window)
+{
+    mWindow = window;
+}
+GLFWwindow* World::GetWindow() const
+{
+    return mWindow;
+}
 double World::GetTime() const
 {
     return mWorldTime;
@@ -45,18 +52,33 @@ void World::AddMesh(Mesh* mesh)
     mRenderer->AddMesh(mesh);
 }
 
-void World::AddInputListener(Actor* actor) {
+void World::AddInputListener(Actor* actor)
+{
     mInputListeners.push_back(actor);
+}
+
+void World::SetActiveCamera(Camera* camera)
+{
+    mActiveCamera = camera;
+}
+
+Camera* World::GetActiveCamera() const
+{
+    return mActiveCamera;
 }
 
 void World::MouseCallback(GLFWwindow *, double x, double y)
 {
+    double mouseRelativeX = mMouseLastX - x;
+    double mouseRelativeY = mMouseLastY - y;
+    mMouseLastX = x;
+    mMouseLastY = y;
     for(auto listener : mInputListeners)
     {
         auto Obj3D = dynamic_cast<Object3D*>(listener);
         if(Obj3D!=nullptr)
         {
-            Obj3D->TryProcessMouseMovement(mDeltaTime, x, y);
+            Obj3D->TryProcessMouseMovement(mDeltaTime, mouseRelativeX, mouseRelativeY);
         }
     }
 }

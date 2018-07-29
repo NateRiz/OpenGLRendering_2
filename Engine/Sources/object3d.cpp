@@ -47,6 +47,14 @@ void Object3D::TryProcessMouseMovement(float delta, double x, double y)
 
 }
 
+void Object3D::Tick(float delta)
+{
+    if (mMesh!=nullptr)
+    {
+        mMesh->SetMatrix(mTransform->GetMatrix());
+    }
+}
+
 void Object3D::ProcessInput(float delta)
 {
 }

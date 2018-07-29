@@ -9,21 +9,17 @@
 #include "glm/glm.hpp"
 
 class Camera : public Object3D{
+
 public:
     Camera(World*, Transform*);
     virtual void Tick(float delta);
     virtual void ProcessMouseMovement(float delta, double x, double y);
     virtual void ProcessInput(float delta);
 
-
-
-
 private:
-    glm::vec3 mFront;
-    glm::vec3 mUp;
-    glm::vec3 mRight;
+    float yaw   = -90.0f;
+    float pitch =  0.0f;
 
-    static constexpr glm::vec3 WORLD_UP = glm::vec3(0, 1, 0);
 };
 
 

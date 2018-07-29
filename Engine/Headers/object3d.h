@@ -15,9 +15,10 @@ public:
     Transform* GetTransform() const;
     void SetTransform(Transform*);
     void SetMesh(Mesh*);
-
     void TryProcessInput(float delta);
     void TryProcessMouseMovement(float delta, double x, double y);
+
+    virtual void Tick(float);
 
     virtual void ProcessInput(float delta)=0;
     virtual void ProcessMouseMovement(float delta, double x, double y)=0;
