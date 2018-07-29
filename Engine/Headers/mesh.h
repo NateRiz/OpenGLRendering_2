@@ -13,10 +13,10 @@ public:
     void SetMatrix(glm::mat4);
 
 private:
-    std::vector<float> mVertices;
+    std::vector<float> mVertices; /**< Vertices to be passed to the rendering pipeline */
     unsigned int VBO;
     Shader mShader;
-    glm::mat4 mMatrix = glm::mat4(1.0);
+    glm::mat4 mMatrix = glm::mat4(1.0);/**< Matrix passed in from Object3D containing this. Used to pass to shaders */
 
 };
 
