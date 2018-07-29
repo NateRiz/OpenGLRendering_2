@@ -28,10 +28,7 @@ Mesh::Mesh( World* world, std::vector<float>& v, Shader s):
     glGenBuffers(1, &VBO);
 }
 
-void Mesh::SetMatrix(glm::mat4 matrix)
-{
-    mMatrix = matrix;
-}
+
 
 
 void Mesh::Draw()
@@ -41,7 +38,7 @@ void Mesh::Draw()
 
     auto camTransform = GetWorld()->GetActiveCamera()->GetTransform();
     mShader.Use();
-    mShader.setMat4("model", mMatrix);
+    mShader.setMat4("model", dynamic_cast<Object3D*>(GetParent())->GetTransform()->GetMatrix());
     glm::mat4 view = glm::lookAt(camTransform->GetLocation(), camTransform->GetLocation() + camTransform->GetForward(),camTransform->GetUp());
     mShader.setMat4("view", view);
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);

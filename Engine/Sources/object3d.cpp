@@ -6,13 +6,12 @@ Object3D::Object3D(World* world, Transform* transform) :
         Actor(world),
         mTransform(transform)
 {
-
 }
 
 Object3D::Object3D(World* world) :
-        Actor(world)
+        Actor(world),
+        mTransform(new Transform())
 {
-
 }
 
 Transform* Object3D::GetTransform() const
@@ -23,11 +22,6 @@ Transform* Object3D::GetTransform() const
 void Object3D::SetTransform(Transform* t)
 {
     mTransform = t;
-}
-
-void Object3D::SetMesh(Mesh* mesh)
-{
-    mMesh = mesh;
 }
 
 void Object3D::TryProcessInput(float delta)
@@ -49,10 +43,7 @@ void Object3D::TryProcessMouseMovement(float delta, double x, double y)
 
 void Object3D::Tick(float delta)
 {
-    if (mMesh!=nullptr)
-    {
-        mMesh->SetMatrix(mTransform->GetMatrix());
-    }
+
 }
 
 void Object3D::ProcessInput(float delta)

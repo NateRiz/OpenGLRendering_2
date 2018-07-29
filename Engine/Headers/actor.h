@@ -10,16 +10,18 @@ class Actor
 public:
     Actor(){}
     Actor(World* world);
-    Actor(World* world, Actor* parent);
     World* GetWorld();
     virtual void Tick(float delta){}
     Actor* GetRoot();
     Actor* GetParent();
+    std::vector<Actor*> GetChildren();
+    void AddChild(Actor*);
+    void SetParent(Actor* parent);
 
 private:
     World* mWorld;
     Actor* mParent = nullptr;
-    std::vector<Actor> mChildren;
+    std::vector<Actor*> mChildren;
 
 };
 

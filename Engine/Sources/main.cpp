@@ -21,7 +21,7 @@ int main()
     glBindVertexArray(VAO);
 
 
-    Camera obj(&world, new Transform());
+    Object3D obj(&world, new Transform());
     std::vector<float> v {
             -0.5f, -0.5f, -0.5f,
             0.5f, -0.5f, -0.5f,
@@ -65,7 +65,8 @@ int main()
             -0.5f,  0.5f,  0.5f,
             -0.5f,  0.5f, -0.5f,
     };
-    obj.SetMesh(new Mesh(&world, v,Shader("DefaultVertex.glsl","DefaultFragment.glsl")));
+    obj.AddChild(new Mesh(&world,v,Shader("DefaultVertex.glsl","DefaultFragment.glsl")));
+
 
     Camera cam = Camera(&world, new Transform());
     (&world)->AddInputListener(&cam);

@@ -7,13 +7,6 @@ Actor::Actor(World* world) :
     mWorld->AddActor(this);
 }
 
-Actor::Actor(World* world, Actor* parent):
-    mWorld(world),
-    mParent(parent)
-{
-    mWorld->AddActor(this);
-}
-
 World* Actor::GetWorld()
 {
     return mWorld;
@@ -24,7 +17,24 @@ Actor* Actor::GetParent()
     return mParent;
 }
 
-Actor* Actor::GetRoot(){
+void Actor::AddChild(Actor* child)
+{
+    child->SetParent(this);
+    mChildren.push_back(child);
+}
+
+void Actor::SetParent(Actor* parent)
+{
+    mParent = parent;
+}
+
+std::vector<Actor*> Actor::GetChildren()
+{
+    return mChildren;
+}
+
+Actor* Actor::GetRoot()
+{
     if(this->GetParent() != nullptr)
         return this->GetParent();
     else
