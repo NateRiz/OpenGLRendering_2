@@ -20,7 +20,7 @@ Window::Window()
 
     glfwMakeContextCurrent(mWindow);
     glfwSetFramebufferSizeCallback(mWindow, FrameBufferSizeCallback);
-    //glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout<<"Failed to initialize GLAD."<<std::endl;

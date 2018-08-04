@@ -18,7 +18,6 @@ public:
 private:
     GLFWwindow* mWindow;
     double last_tick = glfwGetTime();
-
     static constexpr double FPS = 60;
 };
 

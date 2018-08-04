@@ -30,7 +30,7 @@ void Camera::ProcessMouseMovement(float delta, double x, double y)
 }
 
 void Camera::ProcessInput(float delta) {
-    float camSpeed = delta * 2.5f;
+    float camSpeed = delta * 5.5f;
     glm::vec3 location = GetTransform()->GetLocation();
 
     if (glfwGetKey(GetWorld()->GetWindow(), GLFW_KEY_W) == GLFW_PRESS)

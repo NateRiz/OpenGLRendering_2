@@ -16,6 +16,8 @@ public:
     virtual void ProcessMouseMovement(float delta, double x, double y);
     virtual void ProcessInput(float delta);
 
+    const float VIEW_DISTANCE = 300.f;
+
 private:
     float yaw   = -90.0f;
     float pitch =  0.0f;
