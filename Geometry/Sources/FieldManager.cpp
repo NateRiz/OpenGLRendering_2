@@ -77,7 +77,9 @@ void FieldManager::CreateChunk(int xOffset, int zOffset)
         {
             int xCoord = xOffset * CHUNK_SIZE + x;
             int zCoord = zOffset * CHUNK_SIZE + z;
-            int yCoord = heightMap.GetValue(x, z) * CHUNK_SIZE;
+            int yCoord = (int)(heightMap.GetValue(x, z) * CHUNK_SIZE);
+
+            mCubes[glm::vec3(xCoord, yCoord, zCoord)] = Cube();
             CreateCube(xCoord, yCoord, zCoord, vertices);
         }
     }
@@ -87,65 +89,88 @@ void FieldManager::CreateChunk(int xOffset, int zOffset)
 
 
 
-void FieldManager::CreateCube(float xCoord, float yCoord, float zCoord, std::vector<float>& vertices)
+void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<float>& vertices)
 {
-    glm::vec3 v0 = glm::vec3(xCoord + BLOCK_SIZE, yCoord + BLOCK_SIZE, zCoord + BLOCK_SIZE); // 1, 1, 1
-    glm::vec3 v1 = glm::vec3(xCoord + BLOCK_SIZE, yCoord + BLOCK_SIZE, zCoord - BLOCK_SIZE); // 1, 1, 0
-    glm::vec3 v2 = glm::vec3(xCoord + BLOCK_SIZE, yCoord - BLOCK_SIZE, zCoord + BLOCK_SIZE); // 1, 0, 1
-    glm::vec3 v3 = glm::vec3(xCoord + BLOCK_SIZE, yCoord - BLOCK_SIZE, zCoord - BLOCK_SIZE); // 1, 0, 0
-    glm::vec3 v4 = glm::vec3(xCoord - BLOCK_SIZE, yCoord + BLOCK_SIZE, zCoord + BLOCK_SIZE); // 0, 1, 1
-    glm::vec3 v5 = glm::vec3(xCoord - BLOCK_SIZE, yCoord + BLOCK_SIZE, zCoord - BLOCK_SIZE); // 0, 1, 0
-    glm::vec3 v6 = glm::vec3(xCoord - BLOCK_SIZE, yCoord - BLOCK_SIZE, zCoord + BLOCK_SIZE); // 0, 0, 1
-    glm::vec3 v7 = glm::vec3(xCoord - BLOCK_SIZE, yCoord - BLOCK_SIZE, zCoord - BLOCK_SIZE); // 0, 0, 0
+    glm::vec3 v0 = glm::vec3(xCoord + Cube::BLOCK_SIZE, yCoord + Cube::BLOCK_SIZE, zCoord + Cube::BLOCK_SIZE); // 1, 1, 1
+    glm::vec3 v1 = glm::vec3(xCoord + Cube::BLOCK_SIZE, yCoord + Cube::BLOCK_SIZE, zCoord - Cube::BLOCK_SIZE); // 1, 1, 0
+    glm::vec3 v2 = glm::vec3(xCoord + Cube::BLOCK_SIZE, yCoord - Cube::BLOCK_SIZE, zCoord + Cube::BLOCK_SIZE); // 1, 0, 1
+    glm::vec3 v3 = glm::vec3(xCoord + Cube::BLOCK_SIZE, yCoord - Cube::BLOCK_SIZE, zCoord - Cube::BLOCK_SIZE); // 1, 0, 0
+    glm::vec3 v4 = glm::vec3(xCoord - Cube::BLOCK_SIZE, yCoord + Cube::BLOCK_SIZE, zCoord + Cube::BLOCK_SIZE); // 0, 1, 1
+    glm::vec3 v5 = glm::vec3(xCoord - Cube::BLOCK_SIZE, yCoord + Cube::BLOCK_SIZE, zCoord - Cube::BLOCK_SIZE); // 0, 1, 0
+    glm::vec3 v6 = glm::vec3(xCoord - Cube::BLOCK_SIZE, yCoord - Cube::BLOCK_SIZE, zCoord + Cube::BLOCK_SIZE); // 0, 0, 1
+    glm::vec3 v7 = glm::vec3(xCoord - Cube::BLOCK_SIZE, yCoord - Cube::BLOCK_SIZE, zCoord - Cube::BLOCK_SIZE); // 0, 0, 0
 
-
+    auto originalPos = glm::vec3(xCoord,yCoord, zCoord);
+    glm::vec3 comparePos;
 
     // -Z
-    push_vec3(vertices, v7);
-    push_vec3(vertices, v3);
-    push_vec3(vertices, v5);
+    comparePos = glm::vec3(xCoord, yCoord, zCoord-1);
+    if ((mCubes.find(comparePos) == mCubes.end()) || (mCubes[comparePos].faces[4] == false))
+    {
+        mCubes[originalPos].faces[5] = true;
+        push_vec3(vertices, v7);
+        push_vec3(vertices, v3);
+        push_vec3(vertices, v5);
 
-    push_vec3(vertices, v3);
-    push_vec3(vertices, v1);
-    push_vec3(vertices, v5);
+        push_vec3(vertices, v3);
+        push_vec3(vertices, v1);
+        push_vec3(vertices, v5);
+    }
 
     // +X
-    push_vec3(vertices, v3);
-    push_vec3(vertices, v1);
-    push_vec3(vertices, v0);
+    comparePos = glm::vec3(xCoord+1,yCoord, zCoord);
+    if ((mCubes.find(comparePos) == mCubes.end()) || (mCubes[comparePos].faces[1] == false))
+    {
+        mCubes[originalPos].faces[0] = true;
+        push_vec3(vertices, v3);
+        push_vec3(vertices, v1);
+        push_vec3(vertices, v0);
 
-    push_vec3(vertices, v0);
-    push_vec3(vertices, v2);
-    push_vec3(vertices, v3);
+        push_vec3(vertices, v0);
+        push_vec3(vertices, v2);
+        push_vec3(vertices, v3);
+    }
 
     // +Z
-    push_vec3(vertices, v2);
-    push_vec3(vertices, v0);
-    push_vec3(vertices, v4);
+    comparePos = glm::vec3(xCoord, yCoord, zCoord+1);
+    if ((mCubes.find(comparePos) == mCubes.end()) || (mCubes[comparePos].faces[5] == false))
+    {
+        mCubes[originalPos].faces[4] = true;
+        push_vec3(vertices, v2);
+        push_vec3(vertices, v0);
+        push_vec3(vertices, v4);
 
-    push_vec3(vertices, v4);
-    push_vec3(vertices, v6);
-    push_vec3(vertices, v2);
+        push_vec3(vertices, v4);
+        push_vec3(vertices, v6);
+        push_vec3(vertices, v2);
+    }
 
     // -X
-    push_vec3(vertices, v7);
-    push_vec3(vertices, v5);
-    push_vec3(vertices, v4);
+    comparePos = glm::vec3(xCoord-1,yCoord, zCoord);
+    if ((mCubes.find(comparePos) == mCubes.end()) || (mCubes[comparePos].faces[0] == false))
+    {
+        mCubes[originalPos].faces[1] = true;
+        push_vec3(vertices, v7);
+        push_vec3(vertices, v5);
+        push_vec3(vertices, v4);
 
-    push_vec3(vertices, v4);
-    push_vec3(vertices, v6);
-    push_vec3(vertices, v7);
+        push_vec3(vertices, v4);
+        push_vec3(vertices, v6);
+        push_vec3(vertices, v7);
+    }
 
     // +Y
+    mCubes[originalPos].faces[2] = true;
     push_vec3(vertices, v5);
     push_vec3(vertices, v1);
-
     push_vec3(vertices, v0);
 
     push_vec3(vertices, v0);
     push_vec3(vertices, v4);
     push_vec3(vertices, v5);
 
+
+    mCubes[originalPos].faces[3] = false;
 /*
     // -Y
     push_vec3(vertices, v7);

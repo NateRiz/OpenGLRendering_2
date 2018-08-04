@@ -9,9 +9,15 @@
 #include <unordered_map>
 #include <boost/functional/hash.hpp>
 #include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/hash.hpp>
 #include <thread>
 #include <atomic>
 
+struct Cube{
+    static constexpr int BLOCK_SIZE = 1;
+    std::bitset<6> faces = 0; /**< (X, -X, Y, -Y, Z, -Z)*/
+};
 
 class FieldManager : public Actor{
 public:
@@ -23,12 +29,11 @@ public:
 
 private:
     utils::NoiseMap CreateHeightMap(int x, int y);
-    void CreateCube(float xCoord, float yCoord, float zCoord, std::vector<float>&);
+    void CreateCube(int xCoord, int yCoord, int zCoord, std::vector<float>&);
     void DeleteOutOfBoundsChunks(int x, int z);
 
     static constexpr int CHUNK_DISTANCE = 6;
-    static constexpr unsigned int BLOCK_SIZE = 1;
-    static constexpr unsigned int CHUNK_SIZE = 32;
+    static constexpr int CHUNK_SIZE = 32;
 
     std::thread mChunkLoader; /**< Chunks should be created outside of the main thread*/
     std::atomic_bool mChunkLoaderIsRunning {false};
@@ -36,10 +41,10 @@ private:
     glm::vec3 mLastCameraLocation; /**< Location of active camera if it changed this frame*/
     glm::vec3 mLastCameraForward; /**< Forward of active camera if it changed this frame*/
     Mesh* mField; /**< Mesh object of all chunks*/
-    std::unordered_map<std::pair<int, int>,std::vector<float>,boost::hash<std::pair<int,int>>> mCurrentChunks; /**< Key is world coordinate and value is chunk vertices*/
+    std::unordered_map<std::pair<int,int>, std::vector<float>,boost::hash<std::pair<int,int>>> mCurrentChunks; /**< Key is world chunk coordinate and value is chunk vertices*/
+    std::unordered_map<glm::vec3, Cube > mCubes;/**< Key is world cube coordinate and value is corresponding cube*/
     std::vector<float>* mAllVertices; /**< Pointer to all vertices in mCurrentChunks combined*/
     void UpdateChunks();
 };
-
 
 #endif //VOXEL3_CLION_FIELDMANAGER_H
