@@ -12,6 +12,7 @@ class Sun: public Mesh{
 public:
     Sun(World*);
     virtual ~Sun();
+    virtual void Tick(float delta) override;
 
 private:
     std::vector<float>* mVertices = new std::vector<float>{
