@@ -2,17 +2,18 @@
 #include "../Headers/actor.h"
 #include "../Headers/object3d.h"
 #include "../Headers/Renderer.h"
+#include "../Headers/Sun.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
 #include <iostream>
-
 World::World()
 {
     mWorldTime = (float)glfwGetTime();
     mDeltaTime = mWorldTime;
     mLastTime = mWorldTime;
     mRenderer = new Renderer();
+    mSun = new Sun(this);
 }
 
 void World::Update()
@@ -41,6 +42,10 @@ GLFWwindow* World::GetWindow() const
 double World::GetTime() const
 {
     return mWorldTime;
+}
+Mesh* World::GetSun() const
+{
+    return mSun;
 }
 
 void World::AddActor(Actor* actor)

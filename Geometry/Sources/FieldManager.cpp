@@ -100,6 +100,20 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
     glm::vec3 v6 = glm::vec3(xCoord - Cube::BLOCK_SIZE, yCoord - Cube::BLOCK_SIZE, zCoord + Cube::BLOCK_SIZE); // 0, 0, 1
     glm::vec3 v7 = glm::vec3(xCoord - Cube::BLOCK_SIZE, yCoord - Cube::BLOCK_SIZE, zCoord - Cube::BLOCK_SIZE); // 0, 0, 0
 
+
+    // Normals
+    glm::vec3 n1 = glm::vec3(1.f, 0.f, 0.f);// +X
+
+    glm::vec3 n2 = glm::vec3(-1.f, 0.f, 0.f);// -X
+
+    glm::vec3 n3 = glm::vec3(0.f, 1.f, 0.f);// +Y
+
+    glm::vec3 n4 = glm::vec3(0.f, -1.f, 0.f);// -Y
+
+    glm::vec3 n5 = glm::vec3(0.f, 0.f, -1.f);// +Z
+
+    glm::vec3 n6 = glm::vec3(0.f, 0.f, -1.f);// -Z
+
     auto originalPos = glm::vec3(xCoord,yCoord, zCoord);
     glm::vec3 comparePos;
 
@@ -107,14 +121,21 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
     comparePos = glm::vec3(xCoord, yCoord, zCoord-1);
     if ((mCubes.find(comparePos) == mCubes.end()) || (mCubes[comparePos].faces[4] == false))
     {
+
         mCubes[originalPos].faces[5] = true;
         push_vec3(vertices, v7);
+        push_vec3(vertices, n6);
         push_vec3(vertices, v3);
+        push_vec3(vertices, n6);
         push_vec3(vertices, v5);
+        push_vec3(vertices, n6);
 
         push_vec3(vertices, v3);
+        push_vec3(vertices, n6);
         push_vec3(vertices, v1);
+        push_vec3(vertices, n6);
         push_vec3(vertices, v5);
+        push_vec3(vertices, n6);
     }
 
     // +X
@@ -123,12 +144,18 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
     {
         mCubes[originalPos].faces[0] = true;
         push_vec3(vertices, v3);
+        push_vec3(vertices, n1);
         push_vec3(vertices, v1);
+        push_vec3(vertices, n1);
         push_vec3(vertices, v0);
+        push_vec3(vertices, n1);
 
         push_vec3(vertices, v0);
+        push_vec3(vertices, n1);
         push_vec3(vertices, v2);
+        push_vec3(vertices, n1);
         push_vec3(vertices, v3);
+        push_vec3(vertices, n1);
     }
 
     // +Z
@@ -137,12 +164,18 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
     {
         mCubes[originalPos].faces[4] = true;
         push_vec3(vertices, v2);
+        push_vec3(vertices, n5);
         push_vec3(vertices, v0);
+        push_vec3(vertices, n5);
         push_vec3(vertices, v4);
+        push_vec3(vertices, n5);
 
         push_vec3(vertices, v4);
+        push_vec3(vertices, n5);
         push_vec3(vertices, v6);
+        push_vec3(vertices, n5);
         push_vec3(vertices, v2);
+        push_vec3(vertices, n5);
     }
 
     // -X
@@ -151,23 +184,35 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
     {
         mCubes[originalPos].faces[1] = true;
         push_vec3(vertices, v7);
+        push_vec3(vertices, n2);
         push_vec3(vertices, v5);
+        push_vec3(vertices, n2);
         push_vec3(vertices, v4);
+        push_vec3(vertices, n2);
 
         push_vec3(vertices, v4);
+        push_vec3(vertices, n2);
         push_vec3(vertices, v6);
+        push_vec3(vertices, n2);
         push_vec3(vertices, v7);
+        push_vec3(vertices, n2);
     }
 
     // +Y
     mCubes[originalPos].faces[2] = true;
     push_vec3(vertices, v5);
+    push_vec3(vertices, n3);
     push_vec3(vertices, v1);
+    push_vec3(vertices, n3);
     push_vec3(vertices, v0);
+    push_vec3(vertices, n3);
 
     push_vec3(vertices, v0);
+    push_vec3(vertices, n3);
     push_vec3(vertices, v4);
+    push_vec3(vertices, n3);
     push_vec3(vertices, v5);
+    push_vec3(vertices, n3);
 
 
     mCubes[originalPos].faces[3] = false;

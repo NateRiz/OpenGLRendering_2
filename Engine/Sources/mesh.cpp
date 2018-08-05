@@ -39,6 +39,11 @@ void Mesh::SetVertices(std::vector<float>* v)
     mVertices = v;
 }
 
+void Mesh::SetShader(Shader s)
+{
+    mShader = s;
+}
+
 void Mesh::Draw()
 {
     if (mVertices == nullptr)
@@ -46,7 +51,7 @@ void Mesh::Draw()
     if (mVertices->empty())
         return;
 
-    printf("%d\n",mVertices->size());
+    //printf("%d\n",mVertices->size());
 
     auto camTransform = GetWorld()->GetActiveCamera()->GetTransform();
     mShader.Use();
@@ -55,12 +60,21 @@ void Mesh::Draw()
     mShader.setMat4("view", view);
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 300.0f);
     mShader.setMat4("projection",projection);
+    mShader.setVec3("sunPos",GetWorld()->GetSun()->GetTransform()->GetLocation());
+
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, mVertices->size() * sizeof(float), mVertices->data(), GL_DYNAMIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)(sizeof(float)*0));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(sizeof(float)*0));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(sizeof(float)*3));
     glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
     glDrawArrays(GL_TRIANGLES, 0, (GLsizei)mVertices->size());
 }
-
+//LAYOUT
+/*
+ *
+ *  POS.X   POS.Y   POS.Z   NORMAL.X    NORMAL.Y    NORMAL.Z
+ *
+ */
 

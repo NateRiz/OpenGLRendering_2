@@ -6,15 +6,13 @@ layout (location = 1) in vec3 aNormal; // the position variable has attribute po
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-
+uniform vec3 sunPos;
 
 out vec4 vertexColor;
-out vec3 Normal;
-out vec3 FragPos;
 
 void main()
 {
+    // note that we read the multiplication from right to left
     gl_Position = projection * view * model * vec4(aPos, 1.0);
-    Normal = aNormal;
-    FragPos = vec3(model*vec4(aPos,1.f));
+    vertexColor = vec4(1.0, 1.0, 0.0, 1.0);
 }

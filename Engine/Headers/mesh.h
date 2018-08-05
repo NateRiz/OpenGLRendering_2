@@ -1,9 +1,10 @@
 #ifndef MESH_H
 #define MESH_H
 #include "object3d.h"
-#include "../../Geometry/Headers/Shader.h"
+#include "Shader.h"
 
 class Transform;
+#include "../Headers/Shader.h"
 
 class Mesh : public Object3D
 {
@@ -12,6 +13,7 @@ public:
     Mesh(World*);
     Mesh(World*, std::vector<float>*, Shader);
     void SetVertices(std::vector<float>*);
+    void SetShader(Shader);
 
     void Draw();
 

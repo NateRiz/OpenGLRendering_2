@@ -7,6 +7,7 @@ class GLFWwindow;
 class Renderer;
 class Mesh;
 class Camera;
+class Sun;
 
 class World
 {
@@ -38,6 +39,7 @@ public:
      */
     void SetActiveCamera(Camera* camera);
     Camera* GetActiveCamera() const;
+    Mesh* GetSun() const;
     /**
      * Sends RELATIVE mouse events to all actors that are input listeners
      * @param x Current x mouse Position
@@ -56,6 +58,7 @@ private:
     std::vector<Actor*>mInputListeners;/**< All actors that need to be notified of input events.*/
     Camera* mActiveCamera;/**< Must be one active camera at a time.*/
     Renderer* mRenderer;/**< Handles draw calls of all mesh objects.*/
+    Sun* mSun;
     GLFWwindow* mWindow;
     float mWorldTime;/**< Time since GLFW initialized.*/
     float mDeltaTime;/**< Time since last Tick() call.*/
