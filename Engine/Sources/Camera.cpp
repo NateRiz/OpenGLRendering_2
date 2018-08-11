@@ -9,6 +9,7 @@ Camera::Camera(World *world, Transform *transform) :
 
 void Camera::Tick(float delta) {
     TryProcessInput(delta);
+    printf("%f %f %f\n", GetTransform()->GetForward().x, GetTransform()->GetForward().y, GetTransform()->GetForward().z);
 }
 
 

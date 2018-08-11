@@ -32,7 +32,7 @@ private:
     void CreateCube(int xCoord, int yCoord, int zCoord, std::vector<float>&);
     void DeleteOutOfBoundsChunks(int x, int z);
 
-    static constexpr int CHUNK_DISTANCE = 6;
+    static constexpr int CHUNK_DISTANCE = 8;
     static constexpr int CHUNK_SIZE = 32;
 
     std::thread mChunkLoader; /**< Chunks should be created outside of the main thread*/

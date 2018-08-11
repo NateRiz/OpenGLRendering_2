@@ -120,16 +120,16 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
         mCubes[originalPos].faces[5] = true;
         push_vec3(vertices, v7);
         push_vec3(vertices, n6);
-        push_vec3(vertices, v3);
-        push_vec3(vertices, n6);
         push_vec3(vertices, v5);
-        push_vec3(vertices, n6);
-
-        push_vec3(vertices, v3);
         push_vec3(vertices, n6);
         push_vec3(vertices, v1);
         push_vec3(vertices, n6);
-        push_vec3(vertices, v5);
+
+        push_vec3(vertices, v1);
+        push_vec3(vertices, n6);
+        push_vec3(vertices, v3);
+        push_vec3(vertices, n6);
+        push_vec3(vertices, v7);
         push_vec3(vertices, n6);
     }
 
@@ -152,7 +152,6 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
         push_vec3(vertices, v3);
         push_vec3(vertices, n1);
     }
-
     // +Z
     comparePos = glm::vec3(xCoord, yCoord, zCoord+1);
     if ((mCubes.find(comparePos) == mCubes.end()) || (mCubes[comparePos].faces[5] == false))
@@ -180,14 +179,14 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
         mCubes[originalPos].faces[1] = true;
         push_vec3(vertices, v7);
         push_vec3(vertices, n2);
-        push_vec3(vertices, v5);
+        push_vec3(vertices, v6);
         push_vec3(vertices, n2);
         push_vec3(vertices, v4);
         push_vec3(vertices, n2);
 
         push_vec3(vertices, v4);
         push_vec3(vertices, n2);
-        push_vec3(vertices, v6);
+        push_vec3(vertices, v5);
         push_vec3(vertices, n2);
         push_vec3(vertices, v7);
         push_vec3(vertices, n2);
@@ -197,14 +196,14 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
     mCubes[originalPos].faces[2] = true;
     push_vec3(vertices, v5);
     push_vec3(vertices, n3);
-    push_vec3(vertices, v1);
+    push_vec3(vertices, v4);
     push_vec3(vertices, n3);
     push_vec3(vertices, v0);
     push_vec3(vertices, n3);
 
     push_vec3(vertices, v0);
     push_vec3(vertices, n3);
-    push_vec3(vertices, v4);
+    push_vec3(vertices, v1);
     push_vec3(vertices, n3);
     push_vec3(vertices, v5);
     push_vec3(vertices, n3);

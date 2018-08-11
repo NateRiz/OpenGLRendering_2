@@ -1,14 +1,17 @@
+#include <math.h>
 #include "../Headers/Sun.h"
 #include "../Headers/transform.h"
 #include "../Headers/world.h"
 #include "glm/glm.hpp"
 
 Sun::Sun(World* world):
-    Mesh(world, mVertices, Shader("Sun.glsl","SunFragment.glsl"))
+    Mesh(world)
 {
     auto t = new Transform();
     t->SetLocation(glm::vec3(10.f, 30.f, 10.f));
     SetTransform(t);
+    GetVertices().assign(mVertices.begin(),mVertices.end());
+    SetShader(Shader("Sun.glsl","SunFragment.glsl"));
 }
 Sun::~Sun() {}
 
