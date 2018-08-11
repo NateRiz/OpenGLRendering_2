@@ -7,11 +7,14 @@
 
 
 void push_vec3(std::vector<float>&, glm::vec3&);
+void push_vec2(std::vector<float>&, glm::vec2&);
 bool vec3_equals(glm::vec3, glm::vec3);
 FieldManager::FieldManager(World *world) :
         Actor(world),
         mField(new Mesh(world))
 {
+    mField->SetShader(Shader("GroundVertex.glsl", "GroundFragment.glsl"));
+    mField->SetTexture("grass.png");
 }
 
 FieldManager::~FieldManager(){}
@@ -86,6 +89,7 @@ void FieldManager::CreateChunk(int xOffset, int zOffset)
 
 void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<float>& vertices)
 {
+    // Positions
     glm::vec3 v0 = glm::vec3(xCoord + Cube::BLOCK_SIZE, yCoord + Cube::BLOCK_SIZE, zCoord + Cube::BLOCK_SIZE); // 1, 1, 1
     glm::vec3 v1 = glm::vec3(xCoord + Cube::BLOCK_SIZE, yCoord + Cube::BLOCK_SIZE, zCoord - Cube::BLOCK_SIZE); // 1, 1, 0
     glm::vec3 v2 = glm::vec3(xCoord + Cube::BLOCK_SIZE, yCoord - Cube::BLOCK_SIZE, zCoord + Cube::BLOCK_SIZE); // 1, 0, 1
@@ -98,16 +102,17 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
 
     // Normals
     glm::vec3 n1 = glm::vec3(1.f, 0.f, 0.f);// +X
-
     glm::vec3 n2 = glm::vec3(-1.f, 0.f, 0.f);// -X
-
     glm::vec3 n3 = glm::vec3(0.f, 1.f, 0.f);// +Y
-
     glm::vec3 n4 = glm::vec3(0.f, -1.f, 0.f);// -Y
-
     glm::vec3 n5 = glm::vec3(0.f, 0.f, -1.f);// +Z
-
     glm::vec3 n6 = glm::vec3(0.f, 0.f, -1.f);// -Z
+
+    // Textures
+    glm::vec2 t1 = glm::vec2(0.f, 0.f);
+    glm::vec2 t2 = glm::vec2(1.f, 0.f);
+    glm::vec2 t3 = glm::vec2(0.f, 1.f);
+    glm::vec2 t4 = glm::vec2(1.f, 1.f);
 
     auto originalPos = glm::vec3(xCoord,yCoord, zCoord);
     glm::vec3 comparePos;
@@ -120,17 +125,23 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
         mCubes[originalPos].faces[5] = true;
         push_vec3(vertices, v7);
         push_vec3(vertices, n6);
+        push_vec2(vertices, t2);
         push_vec3(vertices, v5);
         push_vec3(vertices, n6);
+        push_vec2(vertices, t4);
         push_vec3(vertices, v1);
         push_vec3(vertices, n6);
+        push_vec2(vertices, t3);
 
         push_vec3(vertices, v1);
         push_vec3(vertices, n6);
+        push_vec2(vertices, t3);
         push_vec3(vertices, v3);
         push_vec3(vertices, n6);
+        push_vec2(vertices, t1);
         push_vec3(vertices, v7);
         push_vec3(vertices, n6);
+        push_vec2(vertices, t2);
     }
 
     // +X
@@ -140,17 +151,23 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
         mCubes[originalPos].faces[0] = true;
         push_vec3(vertices, v3);
         push_vec3(vertices, n1);
+        push_vec2(vertices, t2);
         push_vec3(vertices, v1);
         push_vec3(vertices, n1);
+        push_vec2(vertices, t4);
         push_vec3(vertices, v0);
         push_vec3(vertices, n1);
+        push_vec2(vertices, t3);
 
         push_vec3(vertices, v0);
         push_vec3(vertices, n1);
+        push_vec2(vertices, t3);
         push_vec3(vertices, v2);
         push_vec3(vertices, n1);
+        push_vec2(vertices, t1);
         push_vec3(vertices, v3);
         push_vec3(vertices, n1);
+        push_vec2(vertices, t2);
     }
     // +Z
     comparePos = glm::vec3(xCoord, yCoord, zCoord+1);
@@ -159,17 +176,23 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
         mCubes[originalPos].faces[4] = true;
         push_vec3(vertices, v2);
         push_vec3(vertices, n5);
+        push_vec2(vertices, t2);
         push_vec3(vertices, v0);
         push_vec3(vertices, n5);
+        push_vec2(vertices, t4);
         push_vec3(vertices, v4);
         push_vec3(vertices, n5);
+        push_vec2(vertices, t3);
 
         push_vec3(vertices, v4);
         push_vec3(vertices, n5);
+        push_vec2(vertices, t3);
         push_vec3(vertices, v6);
         push_vec3(vertices, n5);
+        push_vec2(vertices, t1);
         push_vec3(vertices, v2);
         push_vec3(vertices, n5);
+        push_vec2(vertices, t2);
     }
 
     // -X
@@ -179,34 +202,46 @@ void FieldManager::CreateCube(int xCoord, int yCoord, int zCoord, std::vector<fl
         mCubes[originalPos].faces[1] = true;
         push_vec3(vertices, v7);
         push_vec3(vertices, n2);
+        push_vec2(vertices, t1);
         push_vec3(vertices, v6);
         push_vec3(vertices, n2);
+        push_vec2(vertices, t2);
         push_vec3(vertices, v4);
         push_vec3(vertices, n2);
+        push_vec2(vertices, t4);
 
         push_vec3(vertices, v4);
         push_vec3(vertices, n2);
+        push_vec2(vertices, t4);
         push_vec3(vertices, v5);
         push_vec3(vertices, n2);
+        push_vec2(vertices, t3);
         push_vec3(vertices, v7);
         push_vec3(vertices, n2);
+        push_vec2(vertices, t1);
     }
 
     // +Y
     mCubes[originalPos].faces[2] = true;
     push_vec3(vertices, v5);
     push_vec3(vertices, n3);
+    push_vec2(vertices, t3);
     push_vec3(vertices, v4);
     push_vec3(vertices, n3);
+    push_vec2(vertices, t1);
     push_vec3(vertices, v0);
     push_vec3(vertices, n3);
+    push_vec2(vertices, t2);
 
     push_vec3(vertices, v0);
     push_vec3(vertices, n3);
+    push_vec2(vertices, t2);
     push_vec3(vertices, v1);
     push_vec3(vertices, n3);
+    push_vec2(vertices, t4);
     push_vec3(vertices, v5);
     push_vec3(vertices, n3);
+    push_vec2(vertices, t3);
 
 
     mCubes[originalPos].faces[3] = false;
@@ -285,6 +320,11 @@ void push_vec3(std::vector<float>& mV, glm::vec3& v)
     mV.push_back(v.x);
     mV.push_back(v.y);
     mV.push_back(v.z);
+}
+void push_vec2(std::vector<float>& mV, glm::vec2& v)
+{
+    mV.push_back(v.x);
+    mV.push_back(v.y);
 }
 bool vec3_equals(glm::vec3 a, glm::vec3 b)
 {
