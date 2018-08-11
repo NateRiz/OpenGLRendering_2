@@ -9,21 +9,19 @@
 Mesh::Mesh() :
     Object3D(nullptr),
     mShader(Shader("DefaultVertex.glsl","DefaultFragment.glsl")),
-    mVertices(nullptr),
     mAreVerticesDirty(true)
 {}
 
 Mesh::Mesh(World* world):
         Object3D(world),
         mShader(Shader("DefaultVertex.glsl","DefaultFragment.glsl")),
-        mVertices(nullptr),
         mAreVerticesDirty(true)
 {
     world->AddMesh(this);
     glGenBuffers(1, &VBO);
 
 }
-Mesh::Mesh(World* world, std::vector<float>* v, Shader s):
+Mesh::Mesh(World* world, std::vector<float> v, Shader s):
         Object3D(world),
         mVertices(v),
         mAreVerticesDirty(true),
@@ -33,10 +31,9 @@ Mesh::Mesh(World* world, std::vector<float>* v, Shader s):
     glGenBuffers(1, &VBO);
 }
 
-void Mesh::SetVertices(std::vector<float>* v)
+std::vector<float> &Mesh::GetVertices()
 {
-    mAreVerticesDirty = true;
-    mVertices = v;
+    return mVertices;
 }
 
 void Mesh::SetShader(Shader s)
@@ -46,12 +43,10 @@ void Mesh::SetShader(Shader s)
 
 void Mesh::Draw()
 {
-    if (mVertices == nullptr)
-        return;
-    if (mVertices->empty())
+    if (mVertices.empty())
         return;
 
-    //printf("%d\n",mVertices->size());
+    printf("%d\n",(int)mVertices.size());
 
     auto camTransform = GetWorld()->GetActiveCamera()->GetTransform();
     mShader.Use();
@@ -64,12 +59,12 @@ void Mesh::Draw()
 
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, mVertices->size() * sizeof(float), mVertices->data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(float), mVertices.data(), GL_DYNAMIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(sizeof(float)*0));
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(sizeof(float)*3));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
-    glDrawArrays(GL_TRIANGLES, 0, (GLsizei)mVertices->size());
+    glDrawArrays(GL_TRIANGLES, 0, (GLsizei)mVertices.size());
 }
 //LAYOUT
 /*

@@ -10,15 +10,11 @@ void push_vec3(std::vector<float>&, glm::vec3&);
 bool vec3_equals(glm::vec3, glm::vec3);
 FieldManager::FieldManager(World *world) :
         Actor(world),
-        mField(new Mesh(world)),
-        mAllVertices(new std::vector<float>)
+        mField(new Mesh(world))
 {
 }
 
-FieldManager::~FieldManager()
-{
-    delete mAllVertices;
-}
+FieldManager::~FieldManager(){}
 
 void FieldManager::Tick(float delta)
 {
@@ -56,12 +52,11 @@ void FieldManager::UpdateChunks() {
         }
     }
 
-    mAllVertices->clear();
+    mField->GetVertices().clear();
     for (auto k: mCurrentChunks)
     {
-        mAllVertices->insert(mAllVertices->end(), k.second.begin(), k.second.end());
+        mField->GetVertices().insert(mField->GetVertices().end(), k.second.begin(), k.second.end());
     }
-    mField->SetVertices(mAllVertices);
     mChunkLoaderIsRunning = false;
 
 }

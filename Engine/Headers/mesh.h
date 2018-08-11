@@ -11,14 +11,13 @@ class Mesh : public Object3D
 public:
     Mesh();
     Mesh(World*);
-    Mesh(World*, std::vector<float>*, Shader);
-    void SetVertices(std::vector<float>*);
+    Mesh(World*, std::vector<float>, Shader);
     void SetShader(Shader);
-
+    std::vector<float>& GetVertices();
     void Draw();
 
 private:
-    std::vector<float>* mVertices; /**< Vertices to be passed to the rendering pipeline */
+    std::vector<float> mVertices; /**< Vertices to be passed to the rendering pipeline */
     bool mAreVerticesDirty; /**< Determines whether vertices need to be optimized*/
     unsigned int VBO;
     Shader mShader;

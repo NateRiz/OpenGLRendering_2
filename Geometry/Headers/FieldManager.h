@@ -43,7 +43,6 @@ private:
     Mesh* mField; /**< Mesh object of all chunks*/
     std::unordered_map<std::pair<int,int>, std::vector<float>,boost::hash<std::pair<int,int>>> mCurrentChunks; /**< Key is world chunk coordinate and value is chunk vertices*/
     std::unordered_map<glm::vec3, Cube > mCubes;/**< Key is world cube coordinate and value is corresponding cube*/
-    std::vector<float>* mAllVertices; /**< Pointer to all vertices in mCurrentChunks combined*/
     void UpdateChunks();
 };
 

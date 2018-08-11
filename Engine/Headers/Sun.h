@@ -15,7 +15,7 @@ public:
     virtual void Tick(float delta) override;
 
 private:
-    std::vector<float>* mVertices = new std::vector<float>{
+    std::vector<float> mVertices{
         //0.f, 0.f, 0.f, 1.f, 0.f, 0.f, 1.f, 1.f, 0.f, //z
         //0.f, 0.f, 0.f, 0.f, 1.f, 0.f, 1.f, 1.f, 0.f,
         //1.f, 0.f, 0.f, 1.f, 1.f, 0.f, 1.f, 1.f, 1.f, //x

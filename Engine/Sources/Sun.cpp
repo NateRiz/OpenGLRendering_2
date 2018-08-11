@@ -4,20 +4,14 @@
 #include "glm/glm.hpp"
 
 Sun::Sun(World* world):
-    Mesh(world)
+    Mesh(world, mVertices, Shader("Sun.glsl","SunFragment.glsl"))
 {
     auto t = new Transform();
     t->SetLocation(glm::vec3(10.f, 30.f, 10.f));
     SetTransform(t);
-    SetVertices(mVertices);
-    SetShader(Shader("Sun.glsl","SunFragment.glsl"));
-
 }
+Sun::~Sun() {}
 
-Sun::~Sun()
-{
-    delete mVertices;
-}
 
 void Sun::Tick(float delta)
 {
